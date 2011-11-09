@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/desktopTemplate.xhtml">
+
+   <ui:define name="metadata">
+      <f:metadata>
+         <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
+      </f:metadata>
+   </ui:define>
+
+
+   <ui:define name="head">
+      <ui:insert name="head"/>
+   </ui:define>
+
+
+   <ui:define name="content">
+      <h2>Tweets</h2>
+
+      <h:form>
+          <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
+                          render="tweet_table"/>
+          <a4j:push address="content@twitter"
+                   onerror="alert('Error retrieving pushed data')"
+                   ondataavailable="updateContent()">
+          </a4j:push>
+      </h:form>
+
+      <h:dataTable id="tweet_table" var="_tweet" value="#{twitterAgent.tweets}">
+         <h:column>
+            <f:facet name="header">From</f:facet>
+            #{_tweet.screenName}
+         </h:column>
+         <h:column>
+            <f:facet name="header">Text</f:facet>
+            #{_tweet.text}
+         </h:column>
+      </h:dataTable>
+   </ui:define>
+</ui:composition>

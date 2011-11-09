@@ -1,0 +1,190 @@
+body {
+  background: #323232 url(http://www.redhat.com/summit/img/grey_tile.png) repeat-x;
+  margin: 0px;
+  padding: 0px;
+  min-height: 416px;
+  font-family: Helvetica;
+}
+
+h1 {
+  margin: 0px;
+  color: white;
+  text-align: center;
+}
+
+h2 {
+  margin: 0px;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* catch ipad portrait orientation*/
+@media all and (orientation:portrait) {
+/*@media all and (orientation:landscape) {*/
+
+  body {
+    min-width: 768px;
+  }
+
+  #tweets {
+    margin: 5px;
+  }
+
+  #tops {
+    margin: 5px;
+    height: 268px;
+
+  }
+
+  #top_tags {
+    float: left;
+    margin-right: 5px;
+    width: 50%;
+  }
+
+  #top_tweeters {
+    float: right;
+    width: 49%;
+  }
+}
+
+/* catch ipad landscape orientation */
+@media all and (orientation:landscape) {
+/*@media all and (orientation:portrait) {*/
+
+  body {
+    min-width: 1024px;
+  }
+
+  #tweets {
+    width: 63%;
+    margin: 10px;
+    float: left;
+  }
+
+  #tops {
+    float: right;
+    margin: 10px;
+    width: 33%;
+  }
+
+  #top_tweeters {
+    margin-top: 10px;
+  }
+
+  #top_tags {
+
+  }
+
+}
+
+.header-gradient {
+  background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+  background: #000 -webkit-gradient(linear, left top, left bottom, from(#ca1400), to(#800700));
+  border: none;
+
+  /*Since IE and Firefox do not work with the gradients above setting this makes
+    it acceptable on those browsers */
+  background-color:  #ca1400;
+}
+
+#rh-logo {
+   position: absolute;
+   top: 3px;
+   left: 25px;
+}
+
+ul {
+  padding: 0px;
+  margin: 0px;
+  height: auto;
+  width: auto;
+  cursor: default;
+  -webkit-user-select: none;
+}
+
+li {
+  background: white;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  padding-left: 4px;
+  -webkit-margin-top-collapse: separate;
+  -webkit-margin-bottom-collapse: separate;
+  border-style: solid;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-color: rgb(224, 224, 224);
+}
+
+#tweets_list li {
+  margin: 3px;
+  -webkit-border-radius: 8px 8px;
+}
+
+#tweet_div {
+}
+
+.tweeter {
+  font-weight: bold;
+}
+
+.tweet_text {
+  margin-left: 10px;
+  font-size: 115%;
+}
+
+.tweet_txt_div {
+  min-height: 51px;
+  padding-top: 3px;
+  font-size: 15px;
+}
+
+.tweet_profile_img {
+  width: 48px;
+  height: 48px;
+  float: left;
+  margin-right: 10px;
+  margin-top: 3px;
+}
+
+.top_tweeters_txt_div {
+  min-height: 24px;
+  padding-top: 0px;
+  font-size: 18px;
+
+}
+
+.top_tweeter_profile_img {
+  width: 24px;
+  height: 24px;
+  float: left;
+  margin-right: 10px;
+  margin-top: 0px;
+}
+
+.top_tweeter_count {
+  float: right;
+  margin-right: 30px;
+  margin-left: 5px;
+  font-size: 18px;
+  font-weight: bold;
+
+}
+
+.top_tag_div {
+  font-size: 19px;
+  margin-top: 0px;
+  min-height: 20px
+}
+
+.tag_count {
+  float: right;
+  margin-right: 30px;
+  margin-left: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}

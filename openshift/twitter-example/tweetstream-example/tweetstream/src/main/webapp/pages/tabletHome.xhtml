@@ -1,0 +1,112 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/iPadTemplate.xhtml">
+
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
+    </f:metadata>
+  </ui:define>
+
+  <ui:define name="head">
+    <title>TweetStream</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- enable full-screen mode -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- controls the appearance of the status bar in full-screen mode -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
+    <h:outputStylesheet name="css/ipad.css"/>
+
+  </ui:define>
+
+  <ui:define name="body">
+    <h:form>
+      <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
+                      render="browser_form"/>
+      <a4j:push address="content@twitter"
+                onerror="alert('Error retrieving pushed data')"
+                ondataavailable="updateContent()">
+      </a4j:push>
+    </h:form>
+    <h:form id="browser_form">
+
+      <div id="browser">
+        <div id="header" class="header-gradient">
+          <img src="#{request.contextPath}/resources/images/SMrgbeps.png" width="30" height="29" alt="" id="rh-logo"/>
+
+          <h1>TweetStream</h1>
+        </div>
+
+        <div id="tops">
+          <div id="top_tags">
+            <div id="top_tags_header" class="header-gradient">
+              <h2>Top Tags</h2>
+            </div>
+
+            <ul id="top_tags_list">
+              <a4j:repeat value="#{twitterAgent.hashtags}" var="tag" rows="10">
+                <li>
+                  <div class="top_tag_div">
+
+                    <h:outputText value=" ##{tag.hashtag}" class="tag"/>
+                    <h:outputText value="#{tag.count}" class="tag_count"/>
+                  </div>
+                </li>
+              </a4j:repeat>
+            </ul>
+
+          </div>
+
+          <div id="top_tweeters">
+            <div id="top_tweeters_header" class="header-gradient">
+              <h2>Top Tweeters</h2>
+            </div>
+            <ul id="top_tweeters_list">
+              <a4j:repeat value="#{twitterAgent.tweeters}" var="tweeter" rows="10">
+                <li>
+                  <div class="top_tweeter_div">
+                    <img src="#{tweeter.profileImgUrl}" alt="ttw_img" class="top_tweeter_profile_img"/>
+
+                    <div class="top_tweeters_txt_div">
+                      <h:outputText value="#{tweeter.user}" class="top_tweeter"/>
+                      <h:outputText value="#{tweeter.tweetCount}" class="top_tweeter_count"/>
+                    </div>
+                  </div>
+                </li>
+              </a4j:repeat>
+            </ul>
+          </div>
+        </div>
+
+        <div id="tweets">
+          <ul id="tweets_list">
+            <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
+              <li>
+                <div class="tweet_div">
+                  <img src="#{tweet.profileImageUrl}" alt="tw_img" class="tweet_profile_img"/>
+
+                  <div class="tweet_txt_div">
+                    <h:outputText value="#{tweet.screenName}:" class="tweeter"/>
+                    <h:outputText value="#{tweet.text}" class="tweet_text"/>
+                  </div>
+                </div>
+              </li>
+            </ui:repeat>
+          </ul>
+        </div>
+
+
+      </div>
+    </h:form>
+  </ui:define>
+
+</ui:composition>
