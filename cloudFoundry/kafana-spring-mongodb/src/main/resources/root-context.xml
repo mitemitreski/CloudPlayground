@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cloud="http://schema.cloudfoundry.org/spring"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.7.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:property-placeholder
+		location="classpath:be/kafana/conf/local.properties" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongoDbFactory" />
+	</bean>
+	<bean id="venueGrabber" class="be.kafana.foursquare.down.FourSquareVenuesGrabber">
+		<constructor-arg ref="fourSquareAuthData" />
+	</bean>
+	<bean id="fourSquareAuthData" class="be.kafana.foursquare.core.OAuthData">
+		<property name="redirectUri" value="${foursquare.auth.redirect.url}" />
+		<property name="clientSecret" value="${foursquare.auth.clientSecret}" />
+		<property name="clientId" value="${foursquare.auth.clientId}" />
+	</bean>
+	<beans profile="default">
+		<mongo:db-factory id="mongoDbFactory" dbname="kafana"
+			host="127.0.0.1" port="27017" username="mite" password="mitreski" />
+	</beans>
+
+	<beans profile="cloud">
+		<cloud:mongo-db-factory id="mongoDbFactory" />
+	</beans>
+
+</beans>
