@@ -1,13 +1,19 @@
 package be.kafana.foursquare.core;
 
+/**
+ * Representation of Oauth Data 
+ * 
+ * @author mite
+ * 
+ */
 public class OAuthData {
+
 
   private String clientId;
   private String clientSecret;
   private String redirectUri;
 
   public OAuthData() {
-
   }
 
   public OAuthData(String clientId, String clientSecret, String redirectUri) {

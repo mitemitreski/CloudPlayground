@@ -116,26 +116,26 @@ public class HomeController {
   /*
    * 42.252918,19.988708 41.191056,23.27362
    */
-  @RequestMapping("/grab")
-  public void grabData(HttpServletResponse response) throws IOException {
-    response.setContentType("text/plain");
-    PrintWriter out = response.getWriter();
-
-    if (!mongoTemplate.collectionExists(Venue.class)) {
-      mongoTemplate.createCollection(Venue.class);
-    }
-    // 42.378836,23.119812
-    Set<Venue> venues = venueGrabber.grab(40.884448, 20.543518, 42.317939, 23.108826, 30000, 100000);
-    Gson gson = new Gson();
-    for (Iterator<Venue> iterator = venues.iterator(); iterator.hasNext();) {
-      Venue venue = iterator.next();
-      mongoTemplate.save(venue);
-      out.println(gson.toJson(venue));
-    }
-
-    out.println("inserted " + venues.size() + " entries");
-
-  }
+//  @RequestMapping("/grab")
+//  public void grabData(HttpServletResponse response) throws IOException {
+//    response.setContentType("text/plain");
+//    PrintWriter out = response.getWriter();
+//
+//    if (!mongoTemplate.collectionExists(Venue.class)) {
+//      mongoTemplate.createCollection(Venue.class);
+//    }
+//    // 42.378836,23.119812
+//    Set<Venue> venues = venueGrabber.grab(40.884448, 20.543518, 42.317939, 23.108826, 0.01, 100000);
+//    Gson gson = new Gson();
+//    for (Iterator<Venue> iterator = venues.iterator(); iterator.hasNext();) {
+//      Venue venue = iterator.next();
+//      mongoTemplate.save(venue);
+//      out.println(gson.toJson(venue));
+//    }
+//
+//    out.println("inserted " + venues.size() + " entries");
+//
+//  }
 
   @RequestMapping("/deleteAll")
   public void deleteAll(HttpServletResponse response) throws IOException {

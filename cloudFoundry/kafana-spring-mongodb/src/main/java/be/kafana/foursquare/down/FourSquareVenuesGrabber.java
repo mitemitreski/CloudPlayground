@@ -85,7 +85,7 @@ public class FourSquareVenuesGrabber implements VenueGrabber {
       double startLongitude,
       double endLatitude,
       double endLongitude,
-      int rate,
+      double rate,
       long maxItems) {
 
     Set<Venue> allResults = new HashSet<Venue>(Math.abs((int) maxItems));

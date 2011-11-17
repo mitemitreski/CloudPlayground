@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Resource hellper class for simple post to URL / return String
+ * Resource helper class for simple post to URL / return String
  * 
  * @author mite
  * 
@@ -59,7 +59,6 @@ public class GetWebResources {
       connection.setDoOutput(true);
       connection.setRequestMethod("POST");
       connection.connect();
-
       // Write POST request data
       out = new OutputStreamWriter(connection.getOutputStream());
       out.write(inputData);
@@ -74,7 +73,6 @@ public class GetWebResources {
         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
             "Problem closing stream to " + url + " content " + inputData + " while writeing", e);
       }
-
     }
     // Get Response
     BufferedReader in = null;
@@ -88,10 +86,16 @@ public class GetWebResources {
         contentBuf.append(strLine);
       }
 
-      in.close();
     } catch (IOException e) {
       Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
           "Problem writing to " + url + " content " + inputData, e);
+    } finally {
+      try {
+        in.close();
+      } catch (IOException e) {
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+            "Problem closing response stream from  " + url + "with content " + inputData, e);
+      }
     }
     return contentBuf.toString();
 
