@@ -10,69 +10,91 @@ import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//Get Web Resource - Class
+/**
+ * Resource hellper class for simple post to URL / return String
+ * 
+ * @author mite
+ * 
+ */
 public class GetWebResources {
 
-	/**
-	 * @param httpurl
-	 * @return response after GET Request
-	 */
-	public String getContent(URL url) {
+  /**
+   * @param httpurl
+   * @return response after GET Request
+   */
+  public String getContent(URL url) {
 
-		StringBuffer contentBuf = new StringBuffer();
+    StringBuffer contentBuf = new StringBuffer();
+    URLConnection httpc;
+    String line = "";
+    try {
+      httpc = url.openConnection();
+      httpc.setDoInput(true);
+      httpc.connect();
+      BufferedReader in = new BufferedReader(new InputStreamReader(httpc.getInputStream()));
+      while ((line = in.readLine()) != null) {
+        contentBuf.append(line);
+      }
+      in.close();
+    } catch (IOException e) {
+      Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Problem writing to " + url, e);
+    }
+    return contentBuf.toString();
 
-		try {
-			URLConnection httpc;
-			httpc = url.openConnection();
-			httpc.setDoInput(true);
-			httpc.connect();
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					httpc.getInputStream()));
-			String line = "";
-			while ((line = in.readLine()) != null) {
-				contentBuf.append(line);
-			}
-			in.close();
-		} catch (IOException e) {
-			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
-					"Problem writing to " + url, e);
-		}
-		return contentBuf.toString();
+  }
 
-	}
+  /**
+   * Return response after a POST request with given input data
+   * 
+   * @param url
+   * @param inputData
+   * @return
+   */
+  public String setContent(URL url, String inputData) {
+    StringBuffer contentBuf = new StringBuffer();
+    HttpURLConnection connection = null;
+    OutputStreamWriter out = null;
+    try {
+      connection = (HttpURLConnection) url.openConnection();
+      connection.setDoOutput(true);
+      connection.setRequestMethod("POST");
+      connection.connect();
 
-	// Return response after POST Request
-	public String setContent(URL url, String inputdata) {
-		StringBuffer contentBuf = new StringBuffer();
-		try {
-			HttpURLConnection connection = (HttpURLConnection) url
-					.openConnection();
-			connection.setDoOutput(true);
-			connection.setRequestMethod("POST");
-			connection.connect();
+      // Write POST request data
+      out = new OutputStreamWriter(connection.getOutputStream());
+      out.write(inputData);
+      out.flush();
+    } catch (IOException e) {
+      Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+          "Problem writing to " + url + " content " + inputData, e);
+    } finally {
+      try {
+        out.close();
+      } catch (IOException e) {
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+            "Problem closing stream to " + url + " content " + inputData + " while writeing", e);
+      }
 
-			// Write POST request data
-			OutputStreamWriter out = new OutputStreamWriter(
-					connection.getOutputStream());
-			out.write(inputdata);
-			out.flush();
+    }
+    // Get Response
+    BufferedReader in = null;
+    String strLine = "";
+    try {
+      if (connection == null) {
+        return "";
+      }
+      in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+      while ((strLine = in.readLine()) != null) {
+        contentBuf.append(strLine);
+      }
 
-			// Get Response
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					connection.getInputStream()));
-			String strLine = "";
-			while ((strLine = in.readLine()) != null) {
-				contentBuf.append(strLine);
-			}
+      in.close();
+    } catch (IOException e) {
+      Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+          "Problem writing to " + url + " content " + inputData, e);
+    }
+    return contentBuf.toString();
 
-			in.close();
-			out.close();
-		} catch (IOException e) {
-			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
-					"Problem writing to " + url + " content " + inputdata, e);
-		}
-		return contentBuf.toString();
-
-	}
+  }
 
 }

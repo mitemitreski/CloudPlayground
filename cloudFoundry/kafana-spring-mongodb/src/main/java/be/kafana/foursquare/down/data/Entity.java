@@ -1,6 +1,6 @@
 package be.kafana.foursquare.down.data;
 
- 
+
 public class Entity {
 
   private SearchResponse response;
