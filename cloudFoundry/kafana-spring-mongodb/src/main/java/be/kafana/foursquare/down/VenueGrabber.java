@@ -1,6 +1,5 @@
 package be.kafana.foursquare.down;
 
-import java.util.List;
 import java.util.Set;
 
 import org.apache.http.NameValuePair;
@@ -14,8 +13,8 @@ public interface VenueGrabber {
 			int rate, long maxItems);
 
 	public abstract Set<Venue> grabNormalized(int startLatitiude,
-			int startLongitude, int endLatitude, int endLongitude,
-			int rate, long maxItems);
+			int startLongitude, int endLatitude, int endLongitude, int rate,
+			long maxItems);
 
 	public abstract OAuthData getData();
 

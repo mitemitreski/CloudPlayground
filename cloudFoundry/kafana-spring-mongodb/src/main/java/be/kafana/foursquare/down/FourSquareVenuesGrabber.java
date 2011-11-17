@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +50,8 @@ public class FourSquareVenuesGrabber implements VenueGrabber {
 				"yyyyMMdd").format(new Date())));
 		queryParams.add(new BasicNameValuePair("limit", "49"));
 		queryParams.add(new BasicNameValuePair("radius", "4000"));
-//		queryParams.add(new BasicNameValuePair("categoryId", foodLikeVenuesID)); //what is the category of the object
+		// queryParams.add(new BasicNameValuePair("categoryId",
+		// foodLikeVenuesID)); //what is the category of the object
 
 	}
 
@@ -70,7 +70,7 @@ public class FourSquareVenuesGrabber implements VenueGrabber {
 					"/v2/venues/search",
 					URLEncodedUtils.format(new ArrayList<NameValuePair>(
 							queryParams), "UTF-8"), null);
-			System.out.println(uri);
+//			System.out.println(uri);
 			json = conn.getContent(uri.toURL());
 		} catch (MalformedURLException e) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
