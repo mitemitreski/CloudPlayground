@@ -11,11 +11,12 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd 
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<!-- Scheduling -->
-	<task:scheduler id="myScheduler" />
-	<task:executor id="myExecutor" pool-size="5" />
-	<task:annotation-driven executor="myExecutor"
-		scheduler="myScheduler" />
+	<context:annotation-config />
+	
+	<context:component-scan base-package="be.kafana.foursquare.down.task" />
+
+	<!-- Activate Sheduling anotation -->
+	<task:annotation-driven />
 
 	<context:property-placeholder
 		location="classpath:be/kafana/conf/local.properties" />

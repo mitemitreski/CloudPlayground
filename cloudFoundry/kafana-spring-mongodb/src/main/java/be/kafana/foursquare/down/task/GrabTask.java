@@ -1,24 +1,26 @@
 package be.kafana.foursquare.down.task;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.log4j.lf5.LogLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import be.kafana.foursquare.down.VenueGrabber;
 import be.kafana.foursquare.down.data.Venue;
 
 import com.google.gson.Gson;
 
-
+@Service
 public class GrabTask {
 
   @Autowired(required = false)
@@ -28,13 +30,19 @@ public class GrabTask {
 
   @Autowired(required = false)
   MongoTemplate mongoTemplate;
+ 
 
-  @Autowired(required = false)
-  @Qualifier(value = "serviceProperties")
-  Properties serviceProperties;
+  static int i = 0;
 
-  @Scheduled(fixedDelay = 5000)
+  @Scheduled(fixedRate = 5000)
   public void doDownload() {
+    File f = new File("/tmp/test" + (i++));
+    try {
+      f.createNewFile();
+    } catch (IOException e) {
+      // TODO  tESTIN  and add the requerit code
+      e.printStackTrace();
+    }
     Logger.getLogger(getClass().getName().toString()).log(Level.SEVERE, "Currentyly Executing");
     System.out.println("Currently Executing");
   }
