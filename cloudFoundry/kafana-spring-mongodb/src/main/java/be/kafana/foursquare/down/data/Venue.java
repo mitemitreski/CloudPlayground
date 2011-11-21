@@ -1,5 +1,7 @@
 package be.kafana.foursquare.down.data;
 
+import java.util.List;
+
 public class Venue implements IFourSquareNode {
 
   private String id;
@@ -7,6 +9,7 @@ public class Venue implements IFourSquareNode {
   private String url;
   private Location location;
   private Contact contact;
+  private List<Photo> photos;
 
   @Override
   public String toString() {

@@ -1,6 +1,5 @@
 package be.kafana.foursquare.down;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -17,7 +16,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
 import be.kafana.foursquare.core.OAuthData;
-import be.kafana.foursquare.core.GetWebResources;
+import be.kafana.foursquare.core.WebResourcesHelper;
 import be.kafana.foursquare.down.data.Entity;
 import be.kafana.foursquare.down.data.SearchResponse;
 import be.kafana.foursquare.down.data.Venue;
@@ -55,22 +54,19 @@ public class FourSquareVenuesGrabber implements VenueGrabber {
     Logger.getLogger(this.getClass().getName()).log(Level.INFO,
         "getting info from location ll " + latitude + " " + longitude);
     URI uri = null;
-    GetWebResources conn = new GetWebResources();
+    WebResourcesHelper conn = new WebResourcesHelper();
     String json = null;
+    queryParams.remove(lastLocation);
+    lastLocation = new BasicNameValuePair("ll", String.format("%2.6f,%2.6f", latitude, longitude));
+    queryParams.add(lastLocation);
     try {
-      queryParams.remove(lastLocation);
-      lastLocation = new BasicNameValuePair("ll", String.format("%2.6f,%2.6f", latitude, longitude));
-      queryParams.add(lastLocation);
       uri = URIUtils.createURI("https", "api.foursquare.com", -1, "/v2/venues/search",
           URLEncodedUtils.format(new ArrayList<NameValuePair>(queryParams), "UTF-8"), null);
-      // System.out.println(uri);
-      json = conn.getContent(uri.toURL());
-    } catch (MalformedURLException e) {
-      Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
-          "problem creating URL from ll ", e);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
+    // System.out.println(uri);
+    json = conn.getContent(uri);
     Entity res = new Gson().fromJson(json, Entity.class);
     return res.getResponse();
   }

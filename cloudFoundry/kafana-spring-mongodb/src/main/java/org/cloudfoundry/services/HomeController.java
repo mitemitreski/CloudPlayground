@@ -5,12 +5,10 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,9 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import be.kafana.foursquare.down.VenueGrabber;
-import be.kafana.foursquare.down.data.Venue;
 
-import com.google.gson.Gson;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 
@@ -116,26 +112,27 @@ public class HomeController {
   /*
    * 42.252918,19.988708 41.191056,23.27362
    */
-//  @RequestMapping("/grab")
-//  public void grabData(HttpServletResponse response) throws IOException {
-//    response.setContentType("text/plain");
-//    PrintWriter out = response.getWriter();
-//
-//    if (!mongoTemplate.collectionExists(Venue.class)) {
-//      mongoTemplate.createCollection(Venue.class);
-//    }
-//    // 42.378836,23.119812
-//    Set<Venue> venues = venueGrabber.grab(40.884448, 20.543518, 42.317939, 23.108826, 0.01, 100000);
-//    Gson gson = new Gson();
-//    for (Iterator<Venue> iterator = venues.iterator(); iterator.hasNext();) {
-//      Venue venue = iterator.next();
-//      mongoTemplate.save(venue);
-//      out.println(gson.toJson(venue));
-//    }
-//
-//    out.println("inserted " + venues.size() + " entries");
-//
-//  }
+  // @RequestMapping("/grab")
+  // public void grabData(HttpServletResponse response) throws IOException {
+  // response.setContentType("text/plain");
+  // PrintWriter out = response.getWriter();
+  //
+  // if (!mongoTemplate.collectionExists(Venue.class)) {
+  // mongoTemplate.createCollection(Venue.class);
+  // }
+  // // 42.378836,23.119812
+  // Set<Venue> venues = venueGrabber.grab(40.884448, 20.543518, 42.317939,
+  // 23.108826, 0.01, 100000);
+  // Gson gson = new Gson();
+  // for (Iterator<Venue> iterator = venues.iterator(); iterator.hasNext();) {
+  // Venue venue = iterator.next();
+  // mongoTemplate.save(venue);
+  // out.println(gson.toJson(venue));
+  // }
+  //
+  // out.println("inserted " + venues.size() + " entries");
+  //
+  // }
 
   @RequestMapping("/deleteAll")
   public void deleteAll(HttpServletResponse response) throws IOException {

@@ -13,9 +13,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:annotation-config />
 
-	<context:component-scan base-package="be.kafana.foursquare.down.task" />
+	<context:component-scan base-package="classpath:be.kafana.foursquare.down.task" />
 
-	<!-- Activate Sheduling -->
+	<!-- Activate Sheduling anotation -->
 	<task:annotation-driven />
 
 	<context:property-placeholder
@@ -32,13 +32,12 @@
 		<property name="clientSecret" value="${foursquare.auth.clientSecret}" />
 		<property name="clientId" value="${foursquare.auth.clientId}" />
 	</bean>
-	<beans profile="default">
-		<mongo:db-factory id="mongoDbFactory" dbname="kafana"
-			host="127.0.0.1" port="27017" username="mite" password="mitreski" />
-	</beans>
 
-	<beans profile="cloud">
-		<cloud:mongo-db-factory id="mongoDbFactory" />
-	</beans>
+	<bean class="be.kafana.foursquare.down.task.GrabTask" />
+
+	<mongo:db-factory id="mongoDbFactory" dbname="kafana"
+		host="127.0.0.1" port="27017" username="mite" password="mitreski" />
+
+
 
 </beans>
