@@ -21,6 +21,13 @@
 	<context:property-placeholder
 		location="classpath:be/kafana/conf/local.properties" />
 
+	<bean id="utfHttpClient" class="org.apache.http.impl.client.ContentEncodingHttpClient">
+		<constructor-arg>
+			<bean class="org.apache.http.params.BasicHttpParams"></bean>
+		</constructor-arg>
+	</bean>
+
+
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />
 	</bean>
@@ -40,5 +47,4 @@
 	<beans profile="cloud">
 		<cloud:mongo-db-factory id="mongoDbFactory" />
 	</beans>
-
 </beans>
