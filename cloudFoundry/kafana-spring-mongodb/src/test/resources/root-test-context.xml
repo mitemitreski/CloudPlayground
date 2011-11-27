@@ -20,7 +20,7 @@
 
 	<context:property-placeholder
 		location="classpath:be/kafana/conf/local.properties" />
-
+ 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />
 	</bean>

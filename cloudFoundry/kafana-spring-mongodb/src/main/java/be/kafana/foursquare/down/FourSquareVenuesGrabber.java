@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 
 public class FourSquareVenuesGrabber implements VenueGrabber {
 
+  private static final Log LOGGER = LogFactory.getLog(FourSquareVenuesGrabber.class);
   private OAuthData data;
   private Set<NameValuePair> queryParams = new HashSet<NameValuePair>();
 
@@ -33,26 +34,24 @@ public class FourSquareVenuesGrabber implements VenueGrabber {
   public FourSquareVenuesGrabber(OAuthData data) {
     super();
     this.data = data;
-    // TODO smarter way to init defaults
     initDefaults();
   }
 
   private void initDefaults() {
-    // String foodLikeVenuesID = "4d4b7105d754a06374d81259";
     queryParams.add(lastLocation);
     queryParams.add(new BasicNameValuePair("client_id", data.getClientId()));
     queryParams.add(new BasicNameValuePair("client_secret", data.getClientSecret()));
     queryParams.add(new BasicNameValuePair("v", new SimpleDateFormat("yyyyMMdd").format(new Date())));
     queryParams.add(new BasicNameValuePair("limit", "49"));
     queryParams.add(new BasicNameValuePair("radius", "4000"));
+    // String foodLikeVenuesID = "4d4b7105d754a06374d81259";
     // queryParams.add(new BasicNameValuePair("categoryId",
     // foodLikeVenuesID)); //what is the category of the object
 
   }
 
   private SearchResponse grabDataFrom(double latitude, double longitude) {
-    Logger.getLogger(this.getClass().getName()).log(Level.INFO,
-        "getting info from location ll " + latitude + " " + longitude);
+    LOGGER.info("getting info from location ll " + latitude + " " + longitude);
     URI uri = null;
     WebResourcesHelper conn = new WebResourcesHelper();
     String json = null;
@@ -65,7 +64,6 @@ public class FourSquareVenuesGrabber implements VenueGrabber {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-    // System.out.println(uri);
     json = conn.getContent(uri);
     Entity res = new Gson().fromJson(json, Entity.class);
     return res.getResponse();
@@ -93,8 +91,7 @@ public class FourSquareVenuesGrabber implements VenueGrabber {
         if (allResults.size() > maxItems) {
           return allResults;
         }
-        Logger.getLogger(this.getClass().getName()).log(Level.INFO,
-            "found " + allResults.size() + " venues");
+        LOGGER.info("found " + allResults.size() + " venues");
       }
     }
 

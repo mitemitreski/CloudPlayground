@@ -19,8 +19,6 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Resource helper class for simple post to URL / return String
@@ -28,22 +26,21 @@ import org.springframework.stereotype.Service;
  * @author mite
  * 
  */
-@Service
+
 public class WebResourcesHelper {
 
   /**
    * @param uri
    * @return response after GET Request
    */
-  @Autowired
-  private final HttpClient httpclient=null ;
-//  = initHttpClient();
 
-  private HttpClient initHttpClient() {
+  private static final HttpClient httpclient = initHttpClient();
+
+  private static final HttpClient initHttpClient() {
     HttpParams clientParams = new BasicHttpParams();
     clientParams.setParameter(CoreProtocolPNames.STRICT_TRANSFER_ENCODING, false);
     clientParams.setParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET, "utf");
-      
+
     return new ContentEncodingHttpClient(clientParams);
   }
 
@@ -59,7 +56,7 @@ public class WebResourcesHelper {
       Logger.getLogger(getClass().getName()).log(Level.SEVERE, " problem executing " + uri, e1);
     } finally {
       if (response == null) {
-        Logger.getLogger(getClass().getName()).log(Level.INFO, " wrong client settings");
+        Logger.getLogger(getClass().getName()).log(Level.SEVERE, " got no response");
         return "";
       }
 
@@ -80,9 +77,7 @@ public class WebResourcesHelper {
       Logger.getLogger(getClass().getName())
           .log(Level.SEVERE, " problem reading from " + entity, e);
     } finally {
-
       IOUtils.closeQuietly(in);
-
     }
 
     return result;

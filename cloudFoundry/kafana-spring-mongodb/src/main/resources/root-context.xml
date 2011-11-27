@@ -23,7 +23,9 @@
 
 	<bean id="utfHttpClient" class="org.apache.http.impl.client.ContentEncodingHttpClient">
 		<constructor-arg>
-			<bean class="org.apache.http.params.BasicHttpParams"></bean>
+			<bean class="org.apache.http.params.BasicHttpParams">
+
+			</bean>
 		</constructor-arg>
 	</bean>
 

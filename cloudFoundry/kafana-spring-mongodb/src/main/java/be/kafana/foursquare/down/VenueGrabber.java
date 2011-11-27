@@ -25,8 +25,8 @@ public interface VenueGrabber {
       double endLongitude,
       double rate,
       long maxItems);
-   
-  
+
+
   public abstract OAuthData getData();
 
   public abstract void setData(OAuthData data);
