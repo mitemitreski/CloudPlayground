@@ -20,17 +20,26 @@
 
 	<context:property-placeholder
 		location="classpath:be/kafana/conf/local.properties" />
- 
+
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />
-	</bean>
-	<bean id="venueGrabber" class="be.kafana.foursquare.down.FourSquareVenuesGrabber">
-		<constructor-arg ref="fourSquareAuthData" />
 	</bean>
 	<bean id="fourSquareAuthData" class="be.kafana.foursquare.core.OAuthData">
 		<property name="redirectUri" value="${foursquare.auth.redirect.url}" />
 		<property name="clientSecret" value="${foursquare.auth.clientSecret}" />
 		<property name="clientId" value="${foursquare.auth.clientId}" />
+	</bean>
+	<bean id="venueGrabber" class="be.kafana.foursquare.down.FourSquareVenuesGrabber">
+		<constructor-arg>
+			<ref bean="fourSquareAuthData" />
+		</constructor-arg>
+
+		<constructor-arg>
+			<value type="java.lang.Double">41.996243</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value type="java.lang.Double">21.336708</value>
+		</constructor-arg>
 	</bean>
 
 	<bean class="be.kafana.foursquare.down.task.GrabTask" />

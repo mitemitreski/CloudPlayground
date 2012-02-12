@@ -30,9 +30,7 @@ public interface VenueGrabber {
   public abstract OAuthData getData();
 
   public abstract void setData(OAuthData data);
-
-  public abstract Set<NameValuePair> getQueryParams();
-
-  public abstract void setQueryParams(Set<NameValuePair> queryParams);
+ 
+  
 
 }

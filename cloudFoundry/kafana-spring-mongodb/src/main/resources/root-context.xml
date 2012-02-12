@@ -34,7 +34,16 @@
 		<constructor-arg ref="mongoDbFactory" />
 	</bean>
 	<bean id="venueGrabber" class="be.kafana.foursquare.down.FourSquareVenuesGrabber">
-		<constructor-arg ref="fourSquareAuthData" />
+		<constructor-arg>
+			<ref bean="fourSquareAuthData" />
+		</constructor-arg>
+
+		<constructor-arg>
+			<value type="java.lang.Double">41.996243</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value type="java.lang.Double">21.336708</value>
+		</constructor-arg>
 	</bean>
 	<bean id="fourSquareAuthData" class="be.kafana.foursquare.core.OAuthData">
 		<property name="redirectUri" value="${foursquare.auth.redirect.url}" />
